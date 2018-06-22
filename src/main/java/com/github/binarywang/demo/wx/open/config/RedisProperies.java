@@ -1,4 +1,4 @@
-package com.github.binarywang.demo.wechat.config;
+package com.github.binarywang.demo.wx.open.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import redis.clients.jedis.JedisPoolConfig;

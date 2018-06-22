@@ -1,7 +1,7 @@
-package com.github.binarywang.demo.wechat.controller;
+package com.github.binarywang.demo.wx.open.controller;
 
-import com.github.binarywang.demo.wechat.service.WxOpenServiceDemo;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import com.github.binarywang.demo.wx.open.service.WxOpenServiceDemo;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerInfoResult;
 import me.chanjar.weixin.open.bean.result.WxOpenQueryAuthResult;
 import org.slf4j.Logger;
@@ -20,17 +20,17 @@ import java.io.IOException;
  * @author <a href="https://github.com/007gzs">007</a>
  */
 @Controller
-@RequestMapping("api")
+@RequestMapping("/api")
 public class WechatApiController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private WxOpenServiceDemo wxOpenServiceDemo;
-    @GetMapping("auth/goto_auth_url_show")
+    @GetMapping("/auth/goto_auth_url_show")
     @ResponseBody
     public String gotoPreAuthUrlShow(){
         return "<a href='goto_auth_url'>go</a>";
     }
-    @GetMapping("auth/goto_auth_url")
+    @GetMapping("/auth/goto_auth_url")
     public void gotoPreAuthUrl(HttpServletRequest request, HttpServletResponse response){
         String host = request.getHeader("host");
         String url = "http://"+host+"/api/auth/jump";
@@ -42,7 +42,7 @@ public class WechatApiController {
             throw new RuntimeException(e);
         }
     }
-    @GetMapping("auth/jump")
+    @GetMapping("/auth/jump")
     @ResponseBody
     public WxOpenQueryAuthResult jump(@RequestParam("auth_code") String authorizationCode){
         try {
@@ -54,7 +54,7 @@ public class WechatApiController {
             throw new RuntimeException(e);
         }
     }
-    @GetMapping("get_authorizer_info")
+    @GetMapping("/get_authorizer_info")
     @ResponseBody
     public WxOpenAuthorizerInfoResult getAuthorizerInfo(@RequestParam String appId){
         try {

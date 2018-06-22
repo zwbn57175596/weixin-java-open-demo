@@ -1,8 +1,8 @@
-package com.github.binarywang.demo.wechat.service;
+package com.github.binarywang.demo.wx.open.service;
 
-import com.github.binarywang.demo.wechat.config.RedisProperies;
-import com.github.binarywang.demo.wechat.config.WechatOpenProperties;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import com.github.binarywang.demo.wx.open.config.RedisProperies;
+import com.github.binarywang.demo.wx.open.config.WechatOpenProperties;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
@@ -44,12 +44,9 @@ public class WxOpenServiceDemo extends WxOpenServiceImpl {
         inRedisConfigStorage.setComponentAesKey(wechatOpenProperties.getComponentAesKey());
         setWxOpenConfigStorage(inRedisConfigStorage);
         wxOpenMessageRouter = new WxOpenMessageRouter(this);
-        wxOpenMessageRouter.rule().handler(new WxMpMessageHandler() {
-            @Override
-            public WxMpXmlOutMessage handle(WxMpXmlMessage wxMpXmlMessage, Map<String, Object> map, WxMpService wxMpService, WxSessionManager wxSessionManager) throws WxErrorException {
-                logger.info("\n接收到 {} 公众号请求消息，内容：{}", wxMpService.getWxMpConfigStorage().getAppId(), wxMpXmlMessage);
-                return null;
-            }
+        wxOpenMessageRouter.rule().handler((wxMpXmlMessage, map, wxMpService, wxSessionManager) -> {
+            logger.info("\n接收到 {} 公众号请求消息，内容：{}", wxMpService.getWxMpConfigStorage().getAppId(), wxMpXmlMessage);
+            return null;
         }).next();
     }
     public WxOpenMessageRouter getWxOpenMessageRouter(){

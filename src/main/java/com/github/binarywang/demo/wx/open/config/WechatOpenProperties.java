@@ -1,4 +1,4 @@
-package com.github.binarywang.demo.wechat.config;
+package com.github.binarywang.demo.wx.open.config;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
