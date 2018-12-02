@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @author <a href="https://github.com/007gzs">007</a>
  */
 @RestController
-@RequestMapping("/notify")
+@RequestMapping("/wxopen/notify")
 public class WechatNotifyController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
