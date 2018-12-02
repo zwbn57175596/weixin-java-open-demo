@@ -11,8 +11,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<configuration debug="tru
-e">
+<configuration debug="true">
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
     <property name="LOG_HOME" value="/opt/wxopen/log" />
     <!-- 控制台输出 -->
