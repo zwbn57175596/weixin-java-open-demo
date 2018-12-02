@@ -2,16 +2,17 @@ logging:
   level:
     org.springframework.web: DEBUG
     com.github.binarywang.demo.wx.open: DEBUG
+  file: wxopen.log
 
 wechat:
   open:
-    componentAppId: ""
-    componentSecret: ""
-    componentToken: ""
-    componentAesKey: ""
+    componentAppId: "wx5dfdb53d47174243"
+    componentSecret: "14cb46f22e3f04a0add2d69d54a35131"
+    componentToken: "1bf2aa9e0ea2ca584a8030ed707c342f5ce46e4f2a0fa0b23a8e7b99e263c694357b14b87ad48174cba3bddcfd8f47a8340fbdcbaa32a82a97a8403693bd5ca3"
+    componentAesKey: "2c8accdf24f482cc08480ca1c0af09dd7fea5b1d3a2"
   redis:
     host: "127.0.0.1"
 server:
-  port: 80
+  port: 8081
 
 
