@@ -1,7 +1,9 @@
 ### 本Demo基于Spring Boot构建，实现微信第三方平台开发功能。
 
-#### 本项目为weixin-java-tools的Demo演示程序，更多信息请查阅：https://github.com/Wechat-Group/weixin-java-tools
+#### 本项目为WxJava的Demo演示程序，更多信息请查阅：https://github.com/Wechat-Group/WxJava
 
+[![码云Gitee](https://gitee.com/binary/weixin-java-open-demo/badge/star.svg?theme=blue)](https://gitee.com/binary/weixin-java-open-demo)
+[![Github](http://github-svg-buttons.herokuapp.com/star.svg?user=Wechat-Group&repo=weixin-java-open-demo&style=flat&background=1081C1)](https://github.com/Wechat-Group/weixin-java-open-demo)
 [![Build Status](https://travis-ci.org/Wechat-Group/weixin-java-open-demo.svg?branch=master)](https://travis-ci.org/Wechat-Group/weixin-java-open-demo)
 -----------------------
 
