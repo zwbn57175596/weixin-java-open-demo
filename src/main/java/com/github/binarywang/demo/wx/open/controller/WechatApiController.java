@@ -33,7 +33,7 @@ public class WechatApiController {
     @GetMapping("/auth/goto_auth_url")
     public void gotoPreAuthUrl(HttpServletRequest request, HttpServletResponse response){
         String host = request.getHeader("host");
-        String url = "http://"+host+"/api/auth/jump";
+        String url = "http://"+host+"/wxopen/api/auth/jump";
         try {
             url = wxOpenServiceDemo.getWxOpenComponentService().getPreAuthUrl(url);
             response.sendRedirect(url);
