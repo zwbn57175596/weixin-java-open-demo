@@ -20,7 +20,7 @@ import java.io.IOException;
  * @author <a href="https://github.com/007gzs">007</a>
  */
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/wxopen/api")
 public class WechatApiController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
