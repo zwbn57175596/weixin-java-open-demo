@@ -1,17 +1,16 @@
 package com.github.binarywang.demo.wx.open.controller;
 
+import com.github.binarywang.demo.wx.open.service.MaterialService;
 import com.github.binarywang.demo.wx.open.service.WxOpenServiceDemo;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialNewsBatchGetResult;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerInfoResult;
 import me.chanjar.weixin.open.bean.result.WxOpenQueryAuthResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +24,9 @@ public class WechatApiController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private WxOpenServiceDemo wxOpenServiceDemo;
+    @Autowired
+    private MaterialService materialService;
+
     @GetMapping("/auth/goto_auth_url_show")
     @ResponseBody
     public String gotoPreAuthUrlShow(){
@@ -63,5 +65,11 @@ public class WechatApiController {
             logger.error("getAuthorizerInfo", e);
             throw new RuntimeException(e);
         }
+    }
+
+    @RequestMapping("/batchGetNews")
+    @ResponseBody
+    public WxMpMaterialNewsBatchGetResult batchGetNew(@RequestParam("appId") String appId) {
+        return materialService.getBatchMaterial(appId);
     }
 }
