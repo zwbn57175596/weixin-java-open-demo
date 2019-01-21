@@ -24,4 +24,49 @@ spring:
 
     # 模板的模式
     mode: HTML5
+  profiles:
+    active: localhost
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    open-in-view: true
+mybatis:
+  type-aliases-package: com.github.binarywang.demo.wx.open.model
+
+
+---
+
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://35.199.186.132:3306/linqubator?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
+    username: linqubator
+    password: 110119120
+
+---
+
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://35.199.186.132:3306/linqubator?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
+    username: linqubator
+    password: 110119120
+
+
+---
+
+spring:
+  profiles: localhost
+  datasource:
+    url: jdbc:mysql://localhost:3306/linqubator?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
+    username: root
+    password: 110119120
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+      mybatis:
+        SQL: debug
+
 
