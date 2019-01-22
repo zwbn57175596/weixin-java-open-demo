@@ -49,15 +49,17 @@ public class WechatNotifyController {
             // aes加密的消息
             WxOpenXmlMessage inMessage = WxOpenXmlMessage.fromEncryptedXml(requestBody,
                     wxOpenService.getWxOpenConfigStorage(), timestamp, nonce, msgSignature);
-            this.logger.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
+            this.logger.info("\n消息解密后内容为：\n{} ", inMessage.toString());
 
-            this.logger.debug("infoType： {}", inMessage.getInfoType());
+            this.logger.info("infoType： {}", inMessage.getInfoType());
 
             if (inMessage.getInfoType().equalsIgnoreCase("authorized")) {
+                logger.info("zhaowei, enter authorized block");
                 try {
                     weixinPublicAuthMapper.insert(WeixinPublicAuth
                             .builder().appId(inMessage.getAuthorizerAppid())
                             .expiredTime(new Date(inMessage.getAuthorizationCodeExpiredTime() * 1000)).build());
+                    logger.info("zhaowei, after save db");
                 } catch (Exception e) {
                     this.logger.error("save authorized error, inMessage: {}", inMessage);
                     this.logger.error("save authorized error ", e);
