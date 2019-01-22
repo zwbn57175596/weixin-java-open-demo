@@ -32,6 +32,7 @@ public class WechatNotifyController {
     private WeixinPublicAuthMapper weixinPublicAuthMapper;
 
     @RequestMapping("/receive_ticket")
+    @ResponseBody
     public Object receiveTicket(@RequestBody(required = false) String requestBody, @RequestParam("timestamp") String timestamp,
                                 @RequestParam("nonce") String nonce, @RequestParam("signature") String signature,
                                 @RequestParam(name = "encrypt_type", required = false) String encType,
@@ -70,12 +71,11 @@ public class WechatNotifyController {
         } catch (WxErrorException e) {
             this.logger.error("receive_ticket", e);
         }
-
-
         return "success";
     }
 
     @RequestMapping("{appId}/callback")
+    @ResponseBody
     public Object callback(@RequestBody(required = false) String requestBody,
                            @PathVariable("appId") String appId,
                            @RequestParam("signature") String signature,
