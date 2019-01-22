@@ -3,15 +3,11 @@ package com.github.binarywang.demo.wx.open.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class WxPublicAuth implements Serializable {
+public class WeixinPublicAuth implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String appId;
-
-    private String openId;
-
-    private String name;
 
     private int status;
 
@@ -19,7 +15,9 @@ public class WxPublicAuth implements Serializable {
 
     private Date updateTime;
 
-    public WxPublicAuth() {
+    private Date expiredTime;
+
+    public WeixinPublicAuth() {
     }
 
     public String getAppId() {
@@ -28,22 +26,6 @@ public class WxPublicAuth implements Serializable {
 
     public void setAppId(String appId) {
         this.appId = appId;
-    }
-
-    public String getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId = openId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getStatus() {
@@ -70,15 +52,22 @@ public class WxPublicAuth implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public Date getExpiredTime() {
+        return expiredTime;
+    }
+
+    public void setExpiredTime(Date expiredTime) {
+        this.expiredTime = expiredTime;
+    }
+
     @Override
     public String toString() {
-        return "WxPublicAuth{" +
+        return "WeixinPublicAuth{" +
                 "appId='" + appId + '\'' +
-                ", openId='" + openId + '\'' +
-                ", name='" + name + '\'' +
                 ", status=" + status +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", expiredTime=" + expiredTime +
                 '}';
     }
 }

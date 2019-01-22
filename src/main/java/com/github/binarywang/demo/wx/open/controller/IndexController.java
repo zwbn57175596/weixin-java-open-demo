@@ -1,8 +1,8 @@
 package com.github.binarywang.demo.wx.open.controller;
 
 
-import com.github.binarywang.demo.wx.open.mapper.WxPublicAuthMapper;
-import com.github.binarywang.demo.wx.open.model.WxPublicAuth;
+import com.github.binarywang.demo.wx.open.mapper.WeixinPublicAuthMapper;
+import com.github.binarywang.demo.wx.open.model.WeixinPublicAuth;
 import com.github.binarywang.demo.wx.open.service.MaterialService;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNewsBatchGetResult;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ import java.util.List;
 public class IndexController {
 
     @Resource
-    private WxPublicAuthMapper wxPublicAuthMapper;
+    private WeixinPublicAuthMapper weixinPublicAuthMapper;
 
     @Resource
     private MaterialService materialService;
@@ -37,8 +37,8 @@ public class IndexController {
 
     @RequestMapping("/testMybatis")
     @ResponseBody
-    public List<WxPublicAuth> getWxPublicAuth() {
-        return wxPublicAuthMapper.getAll();
+    public List<WeixinPublicAuth> getWxPublicAuth() {
+        return weixinPublicAuthMapper.getAll();
     }
 
 }

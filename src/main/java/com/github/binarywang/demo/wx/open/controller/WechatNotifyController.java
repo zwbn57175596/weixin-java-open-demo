@@ -5,7 +5,9 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
+import me.chanjar.weixin.open.bean.auth.WxOpenAuthorizationInfo;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
+import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,13 +97,18 @@ public class WechatNotifyController {
                 } else if (StringUtils.equals(inMessage.getMsgType(), "event")) {
                     WxMpKefuMessage kefuMessage = WxMpKefuMessage.TEXT().content(inMessage.getEvent() + "from_callback").toUser(inMessage.getFromUser()).build();
                     wxOpenService.getWxOpenComponentService().getWxMpServiceByAppid(appId).getKefuService().sendKefuMessage(kefuMessage);
+                } else if (StringUtils.equals(inMessage.getMsgType(), "authorized")) {
+                    // authorized type message
+                    WxOpenAuthorizationInfo info =
+                            WxOpenGsonBuilder.create().fromJson(inMessage.toString(), WxOpenAuthorizationInfo.class);
+                    logger.info("公众号授权消息接收。 消息 wxOpenAuthorizationInfo: {}", info);
                 }
             } catch (WxErrorException e) {
                 logger.error("callback", e);
             }
-        }else{
+        } else {
             WxMpXmlOutMessage outMessage = wxOpenService.getWxOpenMessageRouter().route(inMessage, appId);
-            if(outMessage != null){
+            if (outMessage != null) {
                 out = WxOpenXmlMessage.wxMpOutXmlMessageToEncryptedXml(outMessage, wxOpenService.getWxOpenConfigStorage());
             }
         }
