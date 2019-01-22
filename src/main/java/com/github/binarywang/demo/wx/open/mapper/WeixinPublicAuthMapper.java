@@ -15,7 +15,7 @@ public interface WeixinPublicAuthMapper {
     @Select("SELECT * FROM weixin_public_auth")
     List<WeixinPublicAuth> getAll();
 
-    @Insert("INSERT INTO userweixin_public_auths" +
+    @Insert("INSERT INTO weixin_public_auths" +
             " (appId, expired_time) VALUES(#{appId}, #{expiredTime})")
     void insert(WeixinPublicAuth weixinPublicAuth);
 }
