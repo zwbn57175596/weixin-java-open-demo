@@ -15,7 +15,6 @@ import javax.sql.DataSource;
  */
 @SpringBootApplication
 @MapperScan("com.github.binarywang.demo.wx.open.mapper")
-
 public class WxOpenApplication implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(WxOpenApplication.class);

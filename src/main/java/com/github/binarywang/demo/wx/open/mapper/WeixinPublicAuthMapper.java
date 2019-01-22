@@ -2,11 +2,13 @@ package com.github.binarywang.demo.wx.open.mapper;
 
 import com.github.binarywang.demo.wx.open.model.WeixinPublicAuth;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Mapper
 public interface WeixinPublicAuthMapper {
 
     @Select("SELECT * FROM weixin_public_auth")
