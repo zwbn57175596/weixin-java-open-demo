@@ -51,7 +51,7 @@ public class WechatNotifyController {
                 wxOpenService.getWxOpenConfigStorage(), timestamp, nonce, msgSignature);
         this.logger.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
 
-        logger.debug("infoType： {}", inMessage.getInfoType());
+        this.logger.debug("infoType： {}", inMessage.getInfoType());
 
         if (inMessage.getInfoType().equalsIgnoreCase("authorized")) {
             try {
@@ -59,8 +59,8 @@ public class WechatNotifyController {
                         .builder().appId(inMessage.getAuthorizerAppid())
                         .expiredTime(new Date(inMessage.getAuthorizationCodeExpiredTime() * 1000)).build());
             } catch (Exception e) {
-                logger.error("save authorized error, inMessage: {}", inMessage);
-                logger.error("save authorized error ", e);
+                this.logger.error("save authorized error, inMessage: {}", inMessage);
+                this.logger.error("save authorized error ", e);
             }
         }
 
@@ -120,7 +120,7 @@ public class WechatNotifyController {
                     wxOpenService.getWxOpenComponentService().getWxMpServiceByAppid(appId).getKefuService().sendKefuMessage(kefuMessage);
                 }
             } catch (WxErrorException e) {
-                logger.error("callback", e);
+                this.logger.error("callback", e);
             }
         } else {
             WxMpXmlOutMessage outMessage = wxOpenService.getWxOpenMessageRouter().route(inMessage, appId);
