@@ -28,7 +28,7 @@ public class WechatNotifyController {
     @Autowired
     protected WxOpenServiceDemo wxOpenService;
 
-    @Resource
+    @Autowired
     private WeixinPublicAuthMapper weixinPublicAuthMapper;
 
     @RequestMapping("/receive_ticket")
