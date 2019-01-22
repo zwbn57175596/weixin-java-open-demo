@@ -97,11 +97,6 @@ public class WechatNotifyController {
                 } else if (StringUtils.equals(inMessage.getMsgType(), "event")) {
                     WxMpKefuMessage kefuMessage = WxMpKefuMessage.TEXT().content(inMessage.getEvent() + "from_callback").toUser(inMessage.getFromUser()).build();
                     wxOpenService.getWxOpenComponentService().getWxMpServiceByAppid(appId).getKefuService().sendKefuMessage(kefuMessage);
-                } else if (StringUtils.equals(inMessage.getMsgType(), "authorized")) {
-                    // authorized type message
-                    WxOpenAuthorizationInfo info =
-                            WxOpenGsonBuilder.create().fromJson(inMessage.toString(), WxOpenAuthorizationInfo.class);
-                    logger.info("公众号授权消息接收。 消息 wxOpenAuthorizationInfo: {}", info);
                 }
             } catch (WxErrorException e) {
                 logger.error("callback", e);
