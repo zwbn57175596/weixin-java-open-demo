@@ -1,18 +1,20 @@
 package com.github.binarywang.demo.wx.open.controller;
 
+import com.github.binarywang.demo.wx.open.mapper.WeixinPublicAuthMapper;
+import com.github.binarywang.demo.wx.open.model.WeixinPublicAuth;
 import com.github.binarywang.demo.wx.open.service.WxOpenServiceDemo;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
-import me.chanjar.weixin.open.bean.auth.WxOpenAuthorizationInfo;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
-import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 /**
  * @author <a href="https://github.com/007gzs">007</a>
@@ -23,6 +25,9 @@ public class WechatNotifyController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     protected WxOpenServiceDemo wxOpenService;
+
+    @Autowired
+    private WeixinPublicAuthMapper weixinPublicAuthMapper;
 
     @RequestMapping("/receive_ticket")
     public Object receiveTicket(@RequestBody(required = false) String requestBody, @RequestParam("timestamp") String timestamp,
@@ -43,6 +48,19 @@ public class WechatNotifyController {
         WxOpenXmlMessage inMessage = WxOpenXmlMessage.fromEncryptedXml(requestBody,
                 wxOpenService.getWxOpenConfigStorage(), timestamp, nonce, msgSignature);
         this.logger.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
+
+
+        if (inMessage.getInfoType().equalsIgnoreCase("authorized")) {
+            try {
+                weixinPublicAuthMapper.insert(WeixinPublicAuth
+                        .builder().appId(inMessage.getAuthorizerAppid())
+                        .expiredTime(new Date(inMessage.getAuthorizationCodeExpiredTime() * 1000)).build());
+            } catch (Exception e) {
+                logger.error("save authorized error, inMessage: {}", inMessage);
+                logger.error("save authorized error ", e);
+            }
+        }
+
         try {
             String out = wxOpenService.getWxOpenComponentService().route(inMessage);
             this.logger.debug("\n组装回复信息：{}", out);

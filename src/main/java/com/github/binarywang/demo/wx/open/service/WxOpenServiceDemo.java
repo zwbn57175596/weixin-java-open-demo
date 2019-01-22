@@ -49,14 +49,7 @@ public class WxOpenServiceDemo extends WxOpenServiceImpl {
         wxOpenMessageRouter = new WxOpenMessageRouter(this);
         wxOpenMessageRouter.rule().handler((wxMpXmlMessage, map, wxMpService, wxSessionManager) -> {
             logger.info("\n接收到 {} 公众号请求消息，内容：{}", wxMpService.getWxMpConfigStorage().getAppId(), wxMpXmlMessage);
-
-            if (StringUtils.equals(wxMpXmlMessage.getMsgType(), "authorized")) {
-                // authorized type message
-                WxOpenAuthorizationInfo info =
-                        WxOpenGsonBuilder.create().fromJson(wxMpXmlMessage.toString(), WxOpenAuthorizationInfo.class);
-                logger.info("公众号授权消息接收。 消息 wxOpenAuthorizationInfo: {}", info);
-            }
-            return null;
+           return null;
         }).next();
     }
     public WxOpenMessageRouter getWxOpenMessageRouter(){

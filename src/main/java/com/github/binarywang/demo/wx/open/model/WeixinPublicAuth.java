@@ -1,8 +1,11 @@
 package com.github.binarywang.demo.wx.open.model;
 
+import lombok.Builder;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Builder
 public class WeixinPublicAuth implements Serializable {
 
     private static final long serialVersionUID = 1L;
