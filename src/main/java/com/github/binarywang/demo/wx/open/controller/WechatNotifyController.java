@@ -12,8 +12,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 /**
@@ -26,7 +28,7 @@ public class WechatNotifyController {
     @Autowired
     protected WxOpenServiceDemo wxOpenService;
 
-    @Autowired
+    @Resource
     private WeixinPublicAuthMapper weixinPublicAuthMapper;
 
     @RequestMapping("/receive_ticket")
@@ -49,6 +51,7 @@ public class WechatNotifyController {
                 wxOpenService.getWxOpenConfigStorage(), timestamp, nonce, msgSignature);
         this.logger.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
 
+        logger.debug("infoType： {}", inMessage.getInfoType());
 
         if (inMessage.getInfoType().equalsIgnoreCase("authorized")) {
             try {
