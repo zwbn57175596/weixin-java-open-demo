@@ -12,10 +12,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.Date;
 
 /**
@@ -37,39 +35,43 @@ public class WechatNotifyController {
                                 @RequestParam("nonce") String nonce, @RequestParam("signature") String signature,
                                 @RequestParam(name = "encrypt_type", required = false) String encType,
                                 @RequestParam(name = "msg_signature", required = false) String msgSignature) {
-        this.logger.info(
-                "\n接收微信请求：[signature=[{}], encType=[{}], msgSignature=[{}],"
-                        + " timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",
-                signature, encType, msgSignature, timestamp, nonce, requestBody);
-
-        if (!StringUtils.equalsIgnoreCase("aes", encType)
-                || !wxOpenService.getWxOpenComponentService().checkSignature(timestamp, nonce, signature)) {
-            throw new IllegalArgumentException("非法请求，可能属于伪造的请求！");
-        }
-
-        // aes加密的消息
-        WxOpenXmlMessage inMessage = WxOpenXmlMessage.fromEncryptedXml(requestBody,
-                wxOpenService.getWxOpenConfigStorage(), timestamp, nonce, msgSignature);
-        this.logger.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
-
-        this.logger.debug("infoType： {}", inMessage.getInfoType());
-
-        if (inMessage.getInfoType().equalsIgnoreCase("authorized")) {
-            try {
-                weixinPublicAuthMapper.insert(WeixinPublicAuth
-                        .builder().appId(inMessage.getAuthorizerAppid())
-                        .expiredTime(new Date(inMessage.getAuthorizationCodeExpiredTime() * 1000)).build());
-            } catch (Exception e) {
-                this.logger.error("save authorized error, inMessage: {}", inMessage);
-                this.logger.error("save authorized error ", e);
-            }
-        }
-
         try {
-            String out = wxOpenService.getWxOpenComponentService().route(inMessage);
-            this.logger.debug("\n组装回复信息：{}", out);
-        } catch (WxErrorException e) {
-            this.logger.error("receive_ticket", e);
+            this.logger.info(
+                    "\n接收微信请求：[signature=[{}], encType=[{}], msgSignature=[{}],"
+                            + " timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",
+                    signature, encType, msgSignature, timestamp, nonce, requestBody);
+
+            if (!StringUtils.equalsIgnoreCase("aes", encType)
+                    || !wxOpenService.getWxOpenComponentService().checkSignature(timestamp, nonce, signature)) {
+                throw new IllegalArgumentException("非法请求，可能属于伪造的请求！");
+            }
+
+            // aes加密的消息
+            WxOpenXmlMessage inMessage = WxOpenXmlMessage.fromEncryptedXml(requestBody,
+                    wxOpenService.getWxOpenConfigStorage(), timestamp, nonce, msgSignature);
+            this.logger.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
+
+            this.logger.debug("infoType： {}", inMessage.getInfoType());
+
+            if (inMessage.getInfoType().equalsIgnoreCase("authorized")) {
+                try {
+                    weixinPublicAuthMapper.insert(WeixinPublicAuth
+                            .builder().appId(inMessage.getAuthorizerAppid())
+                            .expiredTime(new Date(inMessage.getAuthorizationCodeExpiredTime() * 1000)).build());
+                } catch (Exception e) {
+                    this.logger.error("save authorized error, inMessage: {}", inMessage);
+                    this.logger.error("save authorized error ", e);
+                }
+            }
+
+            try {
+                String out = wxOpenService.getWxOpenComponentService().route(inMessage);
+                this.logger.debug("\n组装回复信息：{}", out);
+            } catch (WxErrorException e) {
+                this.logger.error("receive_ticket", e);
+            }
+        } catch (Exception e) {
+            this.logger.error("receiveTicket error ", e);
         }
         return "success";
     }
