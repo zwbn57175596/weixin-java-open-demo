@@ -20,8 +20,7 @@ public interface WeixinPublicArticleMapper {
     @Insert("INSERT INTO weixin_public_article_sync " +
             " (app_id, media_id, thumb_media_id, thumb_url, title, content, author, digest, show_cover_pic, url, " +
             "     need_open_comment, only_fans_can_comment, create_time, update_time, linqubator_article_id)" +
-
-            " VALUES(#{appId}, #{mediaId}, ${thumbMediaId}, #{thumbUrl}, #{title}, #{content}, #{author}, #{digest}, " +
+            " VALUES(#{appId}, #{mediaId}, #{thumbMediaId}, #{thumbUrl}, #{title}, #{content}, #{author}, #{digest}, " +
             "    #{showCoverPic}, #{url}, #{needOpenComment}, #{onlyFansCanComment}, #{createTime}, #{updateTime}, " +
             "    #{linqubatorArticleId})")
     void insert(WeixinPublicArticle weixinPublicArticle);
