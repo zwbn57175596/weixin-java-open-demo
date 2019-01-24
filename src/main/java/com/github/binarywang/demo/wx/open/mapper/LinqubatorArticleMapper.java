@@ -12,8 +12,10 @@ import org.springframework.stereotype.Repository;
 public interface LinqubatorArticleMapper {
 
     @Insert("INSERT INTO t_article " +
-            " (cover, title, content, author, summary, createTime, updateTime, createBy) " +
-            " VALUES (#{cover}, #{title}, #{content}, #{author}, #{summary}, #{createTime}, #{updateTime}, #{createBy}) ")
+            " (cover, title, content, author, summary, createTime, updateTime, " +
+            "   createBy, userId, status, type, delFlag, userType) " +
+            " VALUES (#{cover}, #{title}, #{content}, #{author}, #{summary}, #{createTime}, #{updateTime}" +
+            "   , #{createBy}, #{userId}, #{status}, #{type}, #{delFlag}, #{userType}) ")
     @Options(useGeneratedKeys = true, keyColumn = "id")
     int insert(LinqubatorArticle linqubatorArticle);
 }
