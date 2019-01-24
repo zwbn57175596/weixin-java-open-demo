@@ -54,7 +54,11 @@ public class MaterialService {
                                         .cover(article.getThumbUrl()).title(article.getTitle())
                                         .content(article.getContent()).author(article.getAuthor())
                                         .summary(article.getDigest()).createTime(createTime)
-                                        .updateTime(updateTime).createBy(-1).build();
+                                        .updateTime(updateTime)
+
+                                        // default value set
+                                        .userId(29).createBy(29).status(1).type(2).delFlag(0).userType(1)
+                                        .build();
                                 int linqInsRes = linqubatorArticleMapper.insert(linqubatorArticle);
                                 log.info("weixinArticle insert linqubatorArticle result:{}", linqInsRes > 0);
 
