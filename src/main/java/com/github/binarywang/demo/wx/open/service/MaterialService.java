@@ -8,25 +8,23 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNewsBatchGetResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
+import javax.annotation.Resource;
 import java.util.Date;
-import java.util.Random;
 
 @Service
 public class MaterialService {
 
     private static final Logger log = LoggerFactory.getLogger(MaterialService.class);
 
-    @Autowired
-    protected WxOpenServiceDemo wxOpenService;
+    @Resource
+    private WxOpenServiceDemo wxOpenService;
 
-    @Autowired
+    @Resource
     private WeixinPublicArticleMapper weixinPublicArticleMapper;
 
-    @Autowired
+    @Resource
     private LinqubatorArticleMapper linqubatorArticleMapper;
 
     public WxMpMaterialNewsBatchGetResult getBatchMaterial(String appId) {

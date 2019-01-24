@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import redis.clients.jedis.JedisPool;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -31,10 +32,13 @@ import java.util.Map;
 @EnableConfigurationProperties({WechatOpenProperties.class, RedisProperies.class})
 public class WxOpenServiceDemo extends WxOpenServiceImpl {
     private Logger logger = LoggerFactory.getLogger(getClass());
-    @Autowired
+
+    @Resource
     private WechatOpenProperties wechatOpenProperties;
-    @Autowired
+
+    @Resource
     private RedisProperies redisProperies;
+
     private static JedisPool pool;
     private WxOpenMessageRouter wxOpenMessageRouter;
 
