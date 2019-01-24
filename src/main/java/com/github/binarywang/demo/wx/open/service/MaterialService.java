@@ -1,6 +1,8 @@
 package com.github.binarywang.demo.wx.open.service;
 
+import com.github.binarywang.demo.wx.open.mapper.LinqubatorArticleMapper;
 import com.github.binarywang.demo.wx.open.mapper.WeixinPublicArticleMapper;
+import com.github.binarywang.demo.wx.open.model.LinqubatorArticle;
 import com.github.binarywang.demo.wx.open.model.WeixinPublicArticle;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNewsBatchGetResult;
@@ -24,6 +26,9 @@ public class MaterialService {
     @Autowired
     private WeixinPublicArticleMapper weixinPublicArticleMapper;
 
+    @Autowired
+    private LinqubatorArticleMapper linqubatorArticleMapper;
+
     public WxMpMaterialNewsBatchGetResult getBatchMaterial(String appId) {
         try {
             WxMpMaterialNewsBatchGetResult result = wxOpenService.getWxOpenComponentService().getWxMpServiceByAppid(appId)
@@ -36,14 +41,31 @@ public class MaterialService {
                         final Date updateTime = item.getContent().getUpdatedTime();
                         item.getContent().getArticles().forEach(article -> {
                             try {
-                                weixinPublicArticleMapper.insert(WeixinPublicArticle.builder()
+                                WeixinPublicArticle weixinPublicArticle = WeixinPublicArticle.builder()
                                         .appId(appId).mediaId(mediaId).thumbMediaId(article.getThumbMediaId())
                                         .thumbUrl(article.getThumbUrl()).title(article.getTitle()).content(article.getContent())
                                         .author(article.getAuthor()).digest(article.getDigest()).url(article.getUrl())
                                         .createTime(createTime).updateTime(updateTime)
-                                        .build()); // insert success
+                                        .build();
+                                weixinPublicArticleMapper.insert(weixinPublicArticle); // insert success
+
                                 // insert local article
-                                // todo rest
+                                LinqubatorArticle linqubatorArticle = LinqubatorArticle.builder()
+                                        .cover(article.getThumbUrl()).title(article.getTitle())
+                                        .content(article.getContent()).author(article.getAuthor())
+                                        .summary(article.getDigest()).createTime(createTime)
+                                        .updateTime(updateTime).createBy(-1).build();
+                                int linqInsRes = linqubatorArticleMapper.insert(linqubatorArticle);
+                                log.info("weixinArticle insert linqubatorArticle result:{}", linqInsRes > 0);
+
+                                if (linqInsRes > 0) {
+                                    log.debug("weixinArticle insert linqubatorArticle success. save ID: {}",
+                                            linqubatorArticle.getId());
+                                    // update id
+                                    weixinPublicArticle.setLinqubatorArticleId(linqubatorArticle.getId());
+                                    weixinPublicArticleMapper.update(weixinPublicArticle);
+                                }
+
                             } catch (Exception e) {
                                 // duplicate key skip
                                 log.error("wechat materialService insert local db error, appId: {}, thumbMediaId: {}"
