@@ -35,8 +35,8 @@ public class MaterialService {
                 result.getItems().forEach(item -> {
                     if (null != item.getContent()) {
                         final String mediaId = item.getMediaId();
-                        final Date createTime = item.getContent().getCreatedTime();
-                        final Date updateTime = item.getContent().getUpdatedTime();
+                        final Date createTime = item.getContent().getCreateTime();
+                        final Date updateTime = item.getContent().getUpdateTime();
                         item.getContent().getArticles().forEach(article -> {
                             try {
                                 WeixinPublicArticle weixinPublicArticle = WeixinPublicArticle.builder()
