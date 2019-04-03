@@ -30,9 +30,22 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     open-in-view: true
+    database-platform:  org.hibernate.dialect.MySQL5Dialect
 mybatis:
   type-aliases-package: com.github.binarywang.demo.wx.open.model
 
+logging:
+  level:
+    org.springframework.web: INFO
+    com.github.binarywang.demo.wx.mp: DEBUG
+    me.chanjar.weixin: DEBUG
+wx:
+  mp:
+    configs:
+      - appId: wx7238a50cdb78cd3e
+        secret: 82a77d1784613f9c31b0e2dfa6e77a7b
+        token:  Linkyoubetter816
+        aesKey: P03hr10w7ETibG6tACOXg3Zw7UqhKmY5LsUaDDZDzFT
 
 ---
 
@@ -59,7 +72,7 @@ spring:
   profiles: localhost
   datasource:
     url: jdbc:mysql://localhost:3306/linqubator?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
-    username: root
+    username: linqubator
     password: 110119120
 logging:
   level:
