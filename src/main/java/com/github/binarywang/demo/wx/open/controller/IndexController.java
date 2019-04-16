@@ -31,8 +31,10 @@ public class IndexController {
 
     @RequestMapping("/batchGetNews")
     @ResponseBody
-    public WxMpMaterialNewsBatchGetResult batchGetNew(@RequestParam("appId") String appId) {
-        return materialService.getBatchMaterial(appId);
+    public WxMpMaterialNewsBatchGetResult batchGetNew(
+            @RequestParam("appId") String appId,
+            @RequestParam("adminUserId") Integer adminUserId) {
+        return materialService.getBatchMaterial(appId, adminUserId);
     }
 
     @RequestMapping("/testMybatis")
