@@ -38,6 +38,8 @@ public class WechatApiController {
         String url = "http://"+host+"/wxopen/api/auth/jump";
         try {
             url = wxOpenServiceDemo.getWxOpenComponentService().getPreAuthUrl(url);
+            // 添加来源，解决302跳转来源丢失的问题
+            response.addHeader("Referer", "http://"+host);
             response.sendRedirect(url);
         } catch (WxErrorException | IOException e) {
             logger.error("gotoPreAuthUrl", e);
