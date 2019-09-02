@@ -18,6 +18,7 @@
 
     <properties>
         <weixin-java-open.version>3.5.0</weixin-java-open.version>
+        <weixin-java-mp.version>3.3.7.B</weixin-java-mp.version>
 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -26,6 +27,12 @@
         <project.build.locales>zh_CN</project.build.locales>
     </properties>
     <dependencies>
+
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-mp</artifactId>
+            <version>${weixin-java-mp.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -99,6 +106,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

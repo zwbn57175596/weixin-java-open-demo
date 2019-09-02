@@ -27,7 +27,7 @@ public class MaterialService {
     @Resource
     private LinqubatorArticleMapper linqubatorArticleMapper;
 
-    public WxMpMaterialNewsBatchGetResult getBatchMaterial(String appId) {
+    public WxMpMaterialNewsBatchGetResult getBatchMaterial(String appId, int adminUserId) {
         try {
             WxMpMaterialNewsBatchGetResult result = wxOpenService.getWxOpenComponentService().getWxMpServiceByAppid(appId)
                     .getMaterialService().materialNewsBatchGet(0, 20);
@@ -35,8 +35,8 @@ public class MaterialService {
                 result.getItems().forEach(item -> {
                     if (null != item.getContent()) {
                         final String mediaId = item.getMediaId();
-                        final Date createTime = item.getContent().getCreatedTime();
-                        final Date updateTime = item.getContent().getUpdatedTime();
+                        final Date createTime = item.getContent().getCreateTime();
+                        final Date updateTime = item.getContent().getUpdateTime();
                         item.getContent().getArticles().forEach(article -> {
                             try {
                                 WeixinPublicArticle weixinPublicArticle = WeixinPublicArticle.builder()
@@ -55,7 +55,7 @@ public class MaterialService {
                                         .updateTime(updateTime)
 
                                         // default value set
-                                        .userId(29).createBy(29).status(1).type(2).delFlag(0).userType(1)
+                                        .userId(adminUserId).createBy(adminUserId).status(1).type(2).delFlag(0).userType(0)
                                         .build();
                                 int linqInsRes = linqubatorArticleMapper.insert(linqubatorArticle);
                                 log.info("weixinArticle insert linqubatorArticle result:{}", linqInsRes > 0);
